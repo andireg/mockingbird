@@ -1,0 +1,14 @@
+# This is a basic workflow to help you get started with Actions
+name: Nuget ApolloBus
+
+# Controls when the workflow will run
+
+on:
+
+push:
+
+branches:
+- Release
+
+# Triggers the workflow on push or pull request events but only for the master branch# A workflow run is made up of one or more jobs that can run sequentially or in paralleljobs:publish-nuget:runs-on: ubuntu-lateststeps:- uses: actions/checkout@v2- name: Setup .NET Coreuses: actions/setup-dotnet@v1- name: Install dependenciesrun: dotnet restore- name: Buildrun: dotnet build — configuration Release — no-restore- name: Publish to NuGetuses: brandedoutcast/publish-nuget@v2.5.5with:PROJECT_FILE_PATH: EventBus/ApolloBus.csprojPACKAGE_NAME: ApolloBusVERSION_REGEX: ‘^\s*<Version>(.*)<\/Version>\s*$’TAG_FORMAT: ‘*’NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+
