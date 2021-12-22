@@ -1,0 +1,15 @@
+[
+  {
+    "TypeName": "System.Data.IDbConnection",
+    "Invocations": [
+      {
+        "InvocationName": "SELECT COUNT(*) FROM dbo.FooBar WHERE text = @input",
+        "Arguments": {
+          "input": "KEY"
+        },
+        "Result": 42,
+        "Number": 1
+      }
+    ]
+  }
+]

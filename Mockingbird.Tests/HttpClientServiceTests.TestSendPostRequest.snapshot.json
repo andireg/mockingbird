@@ -1,0 +1,20 @@
+[
+  {
+    "TypeName": "System.Net.Http.HttpClient",
+    "Invocations": [
+      {
+        "InvocationName": "POST https://google.com/",
+        "Arguments": {
+          "Content": "Key=Value",
+          "ContentType": "application/x-www-form-urlencoded"
+        },
+        "Result": {
+          "Status": 200,
+          "Content": "true",
+          "ContentType": "application/json"
+        },
+        "Number": 1
+      }
+    ]
+  }
+]

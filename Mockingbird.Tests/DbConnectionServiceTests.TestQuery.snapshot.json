@@ -1,0 +1,42 @@
+[
+  {
+    "TypeName": "System.Data.IDbConnection",
+    "Invocations": [
+      {
+        "InvocationName": "SELECT * FROM dbo.FooBar WHERE text = @input",
+        "Arguments": {
+          "input": "KEY"
+        },
+        "Result": [
+          [
+            [
+              "Text",
+              "Date",
+              "Value",
+              "Boolean"
+            ],
+            [
+              "string",
+              "DateTime",
+              "Decimal",
+              "bool"
+            ],
+            [
+              "FooBar",
+              "2021-01-01",
+              13.24,
+              true
+            ],
+            [
+              "FooBar2",
+              "2022-01-01",
+              null,
+              false
+            ]
+          ]
+        ],
+        "Number": 1
+      }
+    ]
+  }
+]

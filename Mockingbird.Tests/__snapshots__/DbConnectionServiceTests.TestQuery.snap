@@ -1,0 +1,14 @@
+﻿[
+  {
+    "Text": "FooBar",
+    "Value": 13.24,
+    "Date": "2021-01-01T00:00:00",
+    "Boolean": true
+  },
+  {
+    "Text": "FooBar2",
+    "Value": null,
+    "Date": "2022-01-01T00:00:00",
+    "Boolean": false
+  }
+]

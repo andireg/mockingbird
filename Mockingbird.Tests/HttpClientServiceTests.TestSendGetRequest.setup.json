@@ -1,0 +1,17 @@
+[
+  {
+    "TypeName": "System.Net.Http.HttpClient",
+    "Invocations": [
+      {
+        "InvocationName": "GET https://google.com/?q=FooBar",
+        "Arguments": null,
+        "Result": {
+          "Status": 200,
+          "Content": "true",
+          "ContentType": "application/json"
+        },
+        "Number": 1
+      }
+    ]
+  }
+]
