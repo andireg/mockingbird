@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mockingbird.Tests", "Mockin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mockingbird.Core", "Mockingbird.Core\Mockingbird.Core.csproj", "{DD127C4C-CE2B-4AF9-BB27-AB3E1CB8AC65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mockingbird.Abstractions", "Mockingbird.Abstractions\Mockingbird.Abstractions.csproj", "{11E7E854-78AA-4C48-AA23-1DE56930E801}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mockingbird.Abstractions", "Mockingbird.Abstractions\Mockingbird.Abstractions.csproj", "{11E7E854-78AA-4C48-AA23-1DE56930E801}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
