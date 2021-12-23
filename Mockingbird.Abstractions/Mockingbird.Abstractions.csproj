@@ -11,6 +11,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Testing.Mockingbird.Abstractions</PackageId>
     <Product>Mockingbird</Product>
+    <IsTestProject>false</IsTestProject>
   </PropertyGroup>
 
 </Project>
