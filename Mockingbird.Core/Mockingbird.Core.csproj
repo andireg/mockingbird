@@ -7,7 +7,7 @@
     <RootNamespace>Mockingbird</RootNamespace>
     <Authors>Andreas Regner</Authors>
     <RepositoryUrl>https://github.com/andireg/mockingbird</RepositoryUrl>
-    <RepositoryType>https://github.com/andireg/mockingbird</RepositoryType>
+    <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Testing.Mockingbird</PackageId>
     <Product>Mockingbird</Product>
