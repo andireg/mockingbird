@@ -22,7 +22,7 @@ namespace Mockingbird.Factory.Moq
                 throw new ArgumentNullException(nameof(type));
             }
 
-            if (!type.IsInterface)
+            if (!type.IsInterface && !type.IsAbstract)
             {
                 instance = null;
                 return false;
