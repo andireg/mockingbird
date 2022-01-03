@@ -52,10 +52,11 @@ namespace Mockingbird.Factory.Moq
                             ignoreTypes.Contains(parameters[i].ParameterType) ? "*" : invocation.Arguments[i]);
                     }
 
+                    InvocationInfo? setupInfo = typeSetup?.GetInvocation(invocation.Method.Name, args);
                     typeInvocationProvider.AddInvocation(
                         invocation.Method.Name,
                         args,
-                        null);
+                        setupInfo?.Result);
                 }
             });
 

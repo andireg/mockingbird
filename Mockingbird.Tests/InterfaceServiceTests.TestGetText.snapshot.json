@@ -8,8 +8,8 @@
           "text": "FooBar",
           "cancellationToken": "*"
         },
-        "Result": null,
-        "Number": 2
+        "Result": "FOOBAR",
+        "Number": 1
       }
     ]
   }

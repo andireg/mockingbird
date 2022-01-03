@@ -8,6 +8,7 @@ namespace Mockingbird
     {
         private readonly IObjectFactoryContext classFactoryContext;
         private T? instance;
+        private IEnumerable<TypeInvocationInfo>? collectedInvocations;
         private readonly string snapshotFile;
 
         internal MockContext(IObjectFactoryContext classFactoryContext, string snapshotFile)
@@ -20,15 +21,25 @@ namespace Mockingbird
 
         public void Dispose()
         {
-            IEnumerable<TypeInvocationInfo> invocations = classFactoryContext.InvocationProvider.GetInvocations().OrderBy(i => i.TypeName);
+            IEnumerable<TypeInvocationInfo> invocations = GetTypeInvocations();
             string json = JsonConvert.SerializeObject(invocations, Formatting.Indented);
             File.WriteAllText(snapshotFile, json);
         }
 
         public void Verify()
         {
-            IEnumerable<TypeInvocationInfo> invocations = classFactoryContext.InvocationProvider.GetInvocations().OrderBy(i => i.TypeName);
+            IEnumerable<TypeInvocationInfo> invocations = GetTypeInvocations();
             classFactoryContext.SetupProvider.Verify(invocations);
+        }
+
+        private IEnumerable<TypeInvocationInfo> GetTypeInvocations()
+        {
+            if (collectedInvocations == null)
+            {
+                collectedInvocations = classFactoryContext.InvocationProvider.GetInvocations().OrderBy(i => i.TypeName);
+            }
+
+            return collectedInvocations;
         }
 
         private T CreateInstance()
