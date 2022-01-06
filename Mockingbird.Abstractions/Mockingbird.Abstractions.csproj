@@ -10,6 +10,11 @@
     <RepositoryType>git</RepositoryType>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Testing.Mockingbird.Abstractions</PackageId>
+    <PackageTags>testing mocking net 6</PackageTags>
+    <Description>
+      This library should help you to test easily methods without writing all the mocks yourself.
+      See - https://github.com/andireg/mockingbird
+    </Description>
     <Product>Mockingbird</Product>
     <IsTestProject>false</IsTestProject>
   </PropertyGroup>
