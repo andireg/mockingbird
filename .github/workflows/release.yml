@@ -29,6 +29,6 @@ jobs:
     - name: Pack
       run: dotnet pack --configuration Release /p:Version=${VERSION} --no-build --output .
     - name: Push
-      run: dotnet nuget push .\ --source https://nuget.pkg.github.com/andireg/index.json --api-key ${GITHUB_TOKEN}
+      run: dotnet nuget push .\ --source https://api.nuget.org/v3/index.json --api-key ${NUGET_TOKEN}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NUGET_TOKEN: ${{ secrets.SECRET_NUGET_TOKEN }}
