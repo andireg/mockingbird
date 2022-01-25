@@ -8,7 +8,7 @@ namespace Mockingbird.Invocation
 
         public TypeInvocationProvider(Type type)
         {
-            typeInvocationInfo = new TypeInvocationInfo(type.FullName);
+            typeInvocationInfo = new TypeInvocationInfo(type.FullName!);
         }
 
         public void AddInvocation(string invocationName, object? arguments, object? result)

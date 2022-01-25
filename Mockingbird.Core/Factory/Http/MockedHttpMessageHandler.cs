@@ -28,7 +28,7 @@ namespace Mockingbird.Factory.Http
                 null :
                 new
                 {
-                    Content = await request.Content.ReadAsStringAsync(cancellationToken),
+                    Content = await request.Content.ReadAsStringAsync(),
                     ContentType = request.Content.Headers?.ContentType?.MediaType,
                 };
             InvocationInfo? functionSetup = typeSetup?.Invocations?.FirstOrDefault(fnc =>
@@ -59,7 +59,7 @@ namespace Mockingbird.Factory.Http
                 new HttpResponse
                 {
                     Status = (int)httpResponseMessage.StatusCode,
-                    Content = httpResponseMessage.Content == null ? null : await httpResponseMessage.Content.ReadAsStringAsync(cancellationToken),
+                    Content = httpResponseMessage.Content == null ? null : await httpResponseMessage.Content.ReadAsStringAsync(),
                     ContentType = httpResponseMessage.Content?.Headers?.ContentType?.MediaType,
                 });
 

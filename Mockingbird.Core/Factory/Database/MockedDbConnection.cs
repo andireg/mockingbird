@@ -14,11 +14,11 @@ namespace Mockingbird.Factory.Database
             this.typeInvocationProvider = typeInvocationProvider;
         }
 
-        public string ConnectionString { get; set; }
+        public string ConnectionString { get; set; } = string.Empty;
 
         public int ConnectionTimeout { get; set; }
 
-        public string Database { get; set; }
+        public string Database { get; set; } = string.Empty;
 
         public ConnectionState State { get; set; } = ConnectionState.Open;
 

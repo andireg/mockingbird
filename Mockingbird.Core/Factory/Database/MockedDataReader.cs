@@ -22,11 +22,11 @@ namespace Mockingbird.Factory.Database
 
         private DataTable? CurrentTable => resultIndex < dataSource.Length ? dataSource[resultIndex] : null;
 
-        private object[] CurrentRow => CurrentTable?.Data?.Length > rowIndex ? CurrentTable.Data[rowIndex] : Array.Empty<object>();
+        private object?[] CurrentRow => CurrentTable?.Data?.Length > rowIndex ? CurrentTable.Data[rowIndex] : Array.Empty<object?>();
 
-        public override object this[int ordinal] => CurrentRow[ordinal];
+        public override object? this[int ordinal] => CurrentRow[ordinal];
 
-        public override object this[string name] => CurrentRow[GetOrdinal(name)];
+        public override object? this[string name] => CurrentRow[GetOrdinal(name)];
 
         public override int Depth => dataSource.Length;
 
@@ -125,8 +125,7 @@ namespace Mockingbird.Factory.Database
         public override string GetString(int ordinal)
             => GetValue(ordinal) as string ?? string.Empty;
 
-        public override object GetValue(int ordinal)
-            => CurrentRow[ordinal];
+        public override object? GetValue(int ordinal) => CurrentRow[ordinal];
 
         public override int GetValues(object[] values)
         {

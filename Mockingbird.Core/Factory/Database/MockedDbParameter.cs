@@ -17,9 +17,9 @@ namespace Mockingbird.Factory.Database
 
         public override bool IsNullable { get; set; }
 
-        public override string ParameterName { get; set; }
+        public override string ParameterName { get; set; } = string.Empty;
 
-        public override string SourceColumn { get; set; }
+        public override string SourceColumn { get; set; } = string.Empty;
 
         public override DataRowVersion SourceVersion { get; set; }
         
