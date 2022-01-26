@@ -44,11 +44,11 @@ namespace Mockingbird.Setup
 
                         int usedNumber = usedInvocation?.Number ?? 0;
 
-                        if(usedNumber != setupInvocation.Number)
+                        if (usedNumber != setupInvocation.Number)
                         {
                             throw new Xunit.Sdk.AssertActualExpectedException(
                                 setupInvocation.Number,
-                                usedNumber, 
+                                usedNumber,
                                 $"Number of invocations do not match: {setupInvocation.InvocationName} {JsonConvert.SerializeObject(setupInvocation.Arguments ?? string.Empty)}");
                         }
                     }

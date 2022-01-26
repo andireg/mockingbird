@@ -1,4 +1,6 @@
-﻿namespace Mockingbird.Factory
+﻿using Mockingbird.Output;
+
+namespace Mockingbird.Factory
 {
     internal class DefinedImplementationFactory : IObjectFactory
     {
@@ -14,6 +16,7 @@
             if (implementationFactories.TryGetValue(type, out Func<IObjectFactoryContext, object>? factory))
             {
                 instance = factory!.Invoke(context);
+                context.LogOutput.InstanceCreated(type, nameof(DefinedImplementationFactory));
                 return true;
             }
 

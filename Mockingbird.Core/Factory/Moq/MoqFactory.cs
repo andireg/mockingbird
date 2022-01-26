@@ -3,6 +3,7 @@ using Mockingbird.Invocation;
 using Moq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Mockingbird.Output;
 
 namespace Mockingbird.Factory.Moq
 {
@@ -59,6 +60,8 @@ namespace Mockingbird.Factory.Moq
                         setupInfo?.Result);
                 }
             });
+
+            context.LogOutput.InstanceCreated(type, nameof(MoqFactory));
 
             return true;
         }

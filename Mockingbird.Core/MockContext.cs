@@ -10,11 +10,13 @@ namespace Mockingbird
         private T? instance;
         private IEnumerable<TypeInvocationInfo>? collectedInvocations;
         private readonly string snapshotFile;
+        private readonly string setupFile;
 
-        internal MockContext(IObjectFactoryContext classFactoryContext, string snapshotFile)
+        internal MockContext(IObjectFactoryContext classFactoryContext, string snapshotFile, string setupFile)
         {
             this.classFactoryContext = classFactoryContext;
             this.snapshotFile = snapshotFile;
+            this.setupFile = setupFile;
         }
 
         public T Instance => instance ??= CreateInstance();
@@ -24,6 +26,11 @@ namespace Mockingbird
             IEnumerable<TypeInvocationInfo> invocations = GetTypeInvocations();
             string json = JsonConvert.SerializeObject(invocations, Formatting.Indented);
             File.WriteAllText(snapshotFile, json);
+
+            if (!File.Exists(setupFile))
+            {
+                File.WriteAllText(setupFile, json);
+            }
         }
 
         public void Verify()

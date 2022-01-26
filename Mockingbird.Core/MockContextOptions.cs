@@ -7,6 +7,8 @@ namespace Mockingbird
         private readonly Dictionary<Type, Func<IObjectFactoryContext, object>> implementationFactories = new();
         private readonly List<IObjectFactory> objectFactories = new();
 
+        public Action<string>? LogOutput { get; set; }
+
         public void AddImplementation(Type type, Func<IObjectFactoryContext, object> factory)
             => implementationFactories.Add(type, factory);
 

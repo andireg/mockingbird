@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Mockingbird.Output;
+using System.Reflection;
 
 namespace Mockingbird.Factory
 {
@@ -23,14 +24,18 @@ namespace Mockingbird.Factory
                     if (parameters.All(p => p.success))
                     {
                         instance = constructor.Invoke(parameters.Select(p => p.inst).ToArray());
+                        context.LogOutput.InstanceCreated(type, nameof(ClassFactory));
                         return true;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    context.LogOutput.Invoke($"Tried to create instance {type.FullName} by {nameof(ClassFactory)} failed because: {ex.Message}");
                     // ignore
                 }
             }
+
+            context.LogOutput.Invoke($"Could not create instance {type.FullName} by {nameof(ClassFactory)}");
             instance = null;
             return false;
         }

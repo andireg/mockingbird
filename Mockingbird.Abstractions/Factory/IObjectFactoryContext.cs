@@ -10,5 +10,7 @@ namespace Mockingbird.Factory
         ISetupProvider SetupProvider { get; }
         
         IInvocationProvider InvocationProvider { get; }
+        
+        Action<string> LogOutput { get; }
     }
 }

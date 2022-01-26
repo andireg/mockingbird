@@ -1,0 +1,16 @@
+[
+  {
+    "TypeName": "Mockingbird.Tests.Services.IInterfaceServiceArgument",
+    "Invocations": [
+      {
+        "InvocationName": "GetTextAsync",
+        "Arguments": {
+          "text": "FooBar",
+          "cancellationToken": "*"
+        },
+        "Result": null,
+        "Number": 1
+      }
+    ]
+  }
+]

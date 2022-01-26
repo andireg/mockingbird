@@ -1,4 +1,5 @@
 ﻿using Mockingbird.Invocation;
+using Mockingbird.Output;
 
 namespace Mockingbird.Factory.Http
 {
@@ -12,6 +13,7 @@ namespace Mockingbird.Factory.Http
                 context.SetupProvider.TryGetSetup(type, out TypeInvocationInfo? typeSetup);
                 MockedHttpMessageHandler httpMessageHandler = new(typeSetup, typeInvocationProvider);
                 instance = new HttpClient(httpMessageHandler);
+                context.LogOutput.InstanceCreated(type, nameof(HttpClientFactory));
                 return true;
             }
 
