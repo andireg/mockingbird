@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Mockingbird.Tests.Services
 {
-
     internal class DbConnectionService
     {
         private readonly IDbConnection dbConnection;

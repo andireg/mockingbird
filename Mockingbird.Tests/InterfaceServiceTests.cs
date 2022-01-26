@@ -24,7 +24,7 @@ namespace Mockingbird.Tests
         {
             Mock<IInterfaceServiceArgument> mockedInterfaceServiceArgument = new();
             mockedInterfaceServiceArgument.Setup(mock => mock.GetTextAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync("HELLO-WORLD");
-            using IMockContext<InterfaceService> context = MockContextFactory.Start<InterfaceService>(options => 
+            using IMockContext<InterfaceService> context = MockContextFactory.Start<InterfaceService>(options =>
             {
                 options.AddImplementation(typeof(IInterfaceServiceArgument), mockedInterfaceServiceArgument.Object);
             });

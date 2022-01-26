@@ -1,5 +1,5 @@
-﻿using Mockingbird.Utils;
-using Mockingbird.Invocation;
+﻿using Mockingbird.Invocation;
+using Mockingbird.Utils;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
 
@@ -43,6 +43,7 @@ namespace Mockingbird.Factory.Http
                     case "application/json":
                         httpResponseMessage.Content = httpResponse.Content == null ? null : JsonContent.Create(JsonConvert.DeserializeObject(httpResponse.Content));
                         break;
+
                     default:
                         break;
                 }

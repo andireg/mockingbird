@@ -8,5 +8,4 @@
 
         void BeforeCollectInvocations(Action callback);
     }
-
 }

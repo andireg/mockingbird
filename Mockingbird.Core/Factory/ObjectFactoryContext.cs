@@ -9,7 +9,7 @@ namespace Mockingbird.Factory
         {
             RootFactory = rootFactory;
             SetupProvider = setupProvider;
-            LogOutput = logOutput == null ? _ => { } : logOutput;
+            LogOutput = logOutput ?? (_ => { });
         }
 
         public IObjectFactory RootFactory { get; }

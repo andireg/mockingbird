@@ -16,9 +16,9 @@ namespace Mockingbird
             => objectFactories.Add(factory);
 
         internal DefinedImplementationFactory GetDefinedImplementationFactory()
-            => new DefinedImplementationFactory(implementationFactories);
+            => new(implementationFactories);
 
-        internal IObjectFactory GetAddedFactories() 
+        internal IObjectFactory GetAddedFactories()
             => new ChainedFactory(objectFactories.ToArray());
     }
 }

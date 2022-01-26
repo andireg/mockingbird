@@ -20,7 +20,6 @@ namespace Mockingbird.Utils
             {
                 return default;
             }
-
         }
 
         internal static object? ConvertObject(object? source, Type targetType)

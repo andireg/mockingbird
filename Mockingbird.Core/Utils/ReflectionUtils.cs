@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Text.RegularExpressions;
 
-
 namespace Mockingbird.Factory.Moq
 {
     internal static class ReflectionUtils

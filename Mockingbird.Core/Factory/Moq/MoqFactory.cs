@@ -1,9 +1,9 @@
-﻿using Mockingbird.Utils;
-using Mockingbird.Invocation;
+﻿using Mockingbird.Invocation;
+using Mockingbird.Output;
+using Mockingbird.Utils;
 using Moq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Mockingbird.Output;
 
 namespace Mockingbird.Factory.Moq
 {
@@ -32,15 +32,15 @@ namespace Mockingbird.Factory.Moq
             Type mockType = MockType.MakeGenericType(type);
             Mock moqMock = (Mock)Activator.CreateInstance(mockType)!;
 
-            if (context.SetupProvider.TryGetSetup(type, out TypeInvocationInfo? typeSetup)) 
-            { 
+            if (context.SetupProvider.TryGetSetup(type, out TypeInvocationInfo? typeSetup))
+            {
                 moqMock = SetupMock(moqMock, context, type, typeSetup!);
             }
 
             instance = moqMock.Object;
 
             ITypeInvocationProvider typeInvocationProvider = context.InvocationProvider.ForType(type);
-            context.InvocationProvider.BeforeCollectInvocations(() => 
+            context.InvocationProvider.BeforeCollectInvocations(() =>
             {
                 foreach (IInvocation? invocation in moqMock.Invocations)
                 {
@@ -90,7 +90,7 @@ namespace Mockingbird.Factory.Moq
             Type serviceType,
             InvocationInfo snapshotFunction)
         {
-            Dictionary<string, object> setupArgs = 
+            Dictionary<string, object> setupArgs =
                 ObjectConverter.ConvertObject<Dictionary<string, object>>(snapshotFunction.Arguments) ??
                 new Dictionary<string, object>();
             MethodInfo instanceMethodInfo = serviceType.GetMethodInfo(

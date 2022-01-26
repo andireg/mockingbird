@@ -4,7 +4,7 @@ namespace Mockingbird.Factory
 {
     internal class DefinedImplementationFactory : IObjectFactory
     {
-        private Dictionary<Type, Func<IObjectFactoryContext, object>> implementationFactories;
+        private readonly Dictionary<Type, Func<IObjectFactoryContext, object>> implementationFactories;
 
         public DefinedImplementationFactory(Dictionary<Type, Func<IObjectFactoryContext, object>> implementationFactories)
         {

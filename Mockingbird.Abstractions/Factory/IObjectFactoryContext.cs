@@ -8,9 +8,9 @@ namespace Mockingbird.Factory
         IObjectFactory RootFactory { get; }
 
         ISetupProvider SetupProvider { get; }
-        
+
         IInvocationProvider InvocationProvider { get; }
-        
+
         Action<string> LogOutput { get; }
     }
 }

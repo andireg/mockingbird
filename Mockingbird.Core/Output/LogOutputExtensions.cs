@@ -1,6 +1,6 @@
 ﻿namespace Mockingbird.Output
 {
-    public static  class LogOutputExtensions
+    public static class LogOutputExtensions
     {
         public static void InstanceCreated(this Action<string> logOutput, Type instanceType, string factoryName)
         {

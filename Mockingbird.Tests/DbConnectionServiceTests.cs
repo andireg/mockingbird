@@ -1,5 +1,4 @@
-﻿using Mockingbird;
-using Mockingbird.Tests.Services;
+﻿using Mockingbird.Tests.Services;
 using Snapshooter.Xunit;
 using System.Collections.Generic;
 using System.Threading.Tasks;

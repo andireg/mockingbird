@@ -1,12 +1,7 @@
-﻿using Mockingbird.Factory;
-using Mockingbird.Tests.Services;
-using Moq;
-using System;
+﻿using Mockingbird.Tests.Services;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Mockingbird.Tests
 {

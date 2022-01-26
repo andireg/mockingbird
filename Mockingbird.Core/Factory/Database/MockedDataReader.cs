@@ -33,7 +33,7 @@ namespace Mockingbird.Factory.Database
         public override int FieldCount
             => CurrentTable?.Columns?.Length ?? 0;
 
-        public override bool HasRows 
+        public override bool HasRows
             => CurrentTable?.Data?.Length > 0;
 
         public override bool IsClosed
@@ -90,7 +90,7 @@ namespace Mockingbird.Factory.Database
             throw new NotImplementedException();
         }
 
-        public override Type GetFieldType(int ordinal) 
+        public override Type GetFieldType(int ordinal)
             => CurrentTable?.Types[ordinal] ?? typeof(void);
 
         public override float GetFloat(int ordinal)

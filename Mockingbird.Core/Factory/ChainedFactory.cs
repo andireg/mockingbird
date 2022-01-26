@@ -13,7 +13,7 @@
         {
             foreach (IObjectFactory classFactory in classFactories)
             {
-                if(classFactory.TryCreateInstance(type, context, out instance))
+                if (classFactory.TryCreateInstance(type, context, out instance))
                 {
                     return true;
                 }

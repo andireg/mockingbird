@@ -23,7 +23,7 @@ namespace Mockingbird
                 new ChainedFactory(
                     options.GetDefinedImplementationFactory(),
                     options.GetAddedFactories(),
-                    new HttpClientFactory(), 
+                    new HttpClientFactory(),
                     new DatabaseFactory(),
                     new MoqFactory(),
                     new ClassFactory()),
