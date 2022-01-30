@@ -16,17 +16,14 @@ namespace Mockingbird.Factory.Moq
         private static readonly MethodInfo TaskFromResultMethodInfo = TaskType.GetMethodInfo("FromResult<TResult>(TResult)");
         private static readonly IEnumerable<Type> ignoreTypes = new[] { typeof(CancellationToken) };
 
-        public bool TryCreateInstance(Type type, IObjectFactoryContext context, out object? instance)
+        public bool CanCreateInstance(Type type, IObjectFactoryContext context)
+            => type.IsAbstract || type.IsInterface;
+
+        public object CreateInstance(Type type, IObjectFactoryContext context)
         {
             if (type == null)
             {
                 throw new ArgumentNullException(nameof(type));
-            }
-
-            if (!type.IsInterface && !type.IsAbstract)
-            {
-                instance = null;
-                return false;
             }
 
             Type mockType = MockType.MakeGenericType(type);
@@ -37,7 +34,7 @@ namespace Mockingbird.Factory.Moq
                 moqMock = SetupMock(moqMock, context, type, typeSetup!);
             }
 
-            instance = moqMock.Object;
+            object instance = moqMock.Object;
 
             ITypeInvocationProvider typeInvocationProvider = context.InvocationProvider.ForType(type);
             context.InvocationProvider.BeforeCollectInvocations(() =>
@@ -61,9 +58,7 @@ namespace Mockingbird.Factory.Moq
                 }
             });
 
-            context.LogOutput.InstanceCreated(type, nameof(MoqFactory));
-
-            return true;
+            return instance;
         }
 
         private static Mock SetupMock(
@@ -127,20 +122,21 @@ namespace Mockingbird.Factory.Moq
                 object? value = null;
                 if (snapshotFunction.Result.ToString() == "<MOCK>")
                 {
-                    if (context.RootFactory.TryCreateInstance(responseType, context, out object? val))
+                    if (context.RootFactory.CanCreateInstance(responseType, context))
                     {
-                        value = val;
+                        value = context.RootFactory.CreateInstance(responseType, context);
                     }
                 }
                 else
                 {
                     value = ConvertUtils.ConvertToType(snapshotFunction.Result, responseType);
-                    bool isAsync = instanceMethodInfo.ReturnType.IsTaskType();
-                    if (isAsync)
-                    {
-                        value = MakeTaskValue(value!, responseType);
-                    }
                 }
+
+                if (value != null && instanceMethodInfo.ReturnType.IsTaskType())
+                {
+                    value = MakeTaskValue(value!, responseType);
+                }
+
 
                 MethodInfo returnMethodInfo = returnSetup.GetType().GetMethodInfo($"Returns({instanceMethodInfo.ReturnType.GetTypeName()})");
                 returnMethodInfo.Invoke(returnSetup, value == null ? Array.Empty<object>() : new object[] { value! });

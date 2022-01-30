@@ -2,6 +2,8 @@
 {
     public interface IObjectFactory
     {
-        bool TryCreateInstance(Type type, IObjectFactoryContext context, out object? instance);
+        object CreateInstance(Type type, IObjectFactoryContext context);
+
+        bool CanCreateInstance(Type type, IObjectFactoryContext context);
     }
 }

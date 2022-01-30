@@ -5,20 +5,15 @@ namespace Mockingbird.Factory.Http
 {
     public class HttpClientFactory : IObjectFactory
     {
-        public bool TryCreateInstance(Type type, IObjectFactoryContext context, out object? instance)
-        {
-            if (type == typeof(HttpClient))
-            {
-                ITypeInvocationProvider typeInvocationProvider = context.InvocationProvider.ForType(type);
-                context.SetupProvider.TryGetSetup(type, out TypeInvocationInfo? typeSetup);
-                MockedHttpMessageHandler httpMessageHandler = new(typeSetup, typeInvocationProvider);
-                instance = new HttpClient(httpMessageHandler);
-                context.LogOutput.InstanceCreated(type, nameof(HttpClientFactory));
-                return true;
-            }
+        public bool CanCreateInstance(Type type, IObjectFactoryContext context)
+            => type == typeof(HttpClient);
 
-            instance = null;
-            return false;
+        public object CreateInstance(Type type, IObjectFactoryContext context)
+        {
+            ITypeInvocationProvider typeInvocationProvider = context.InvocationProvider.ForType(type);
+            context.SetupProvider.TryGetSetup(type, out TypeInvocationInfo? typeSetup);
+            MockedHttpMessageHandler httpMessageHandler = new(typeSetup, typeInvocationProvider);
+            return new HttpClient(httpMessageHandler);
         }
     }
 }

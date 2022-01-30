@@ -42,11 +42,15 @@ namespace Mockingbird.Tests
             object? instance = mockedInterfaceServiceArgument.Object;
             Mock<IObjectFactory> objectFactoryMock = new();
             objectFactoryMock
-                .Setup(f => f.TryCreateInstance(
+                .Setup(f => f.CanCreateInstance(
                     It.Is<Type>(m => m == typeof(IInterfaceServiceArgument)),
-                    It.IsAny<IObjectFactoryContext>(),
-                    out instance))
+                    It.IsAny<IObjectFactoryContext>()))
                 .Returns(true);
+            objectFactoryMock
+                .Setup(f => f.CreateInstance(
+                    It.Is<Type>(m => m == typeof(IInterfaceServiceArgument)),
+                    It.IsAny<IObjectFactoryContext>()))
+                .Returns(instance);
 
             using IMockContext<InterfaceService> context = MockContextFactory.Start<InterfaceService>(options =>
             {

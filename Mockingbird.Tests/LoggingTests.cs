@@ -17,8 +17,8 @@ namespace Mockingbird.Tests
             });
             string actual = await context.Instance.GetTextAsync("FooBar", default);
             string messages = stringBuilder.ToString();
-            Assert.Equal(@"Instance Mockingbird.Tests.Services.IInterfaceServiceArgument created by MoqFactory
-Instance Mockingbird.Tests.Services.InterfaceService created by ClassFactory
+            Assert.Equal(@"Instance of Mockingbird.Tests.Services.IInterfaceServiceArgument as Castle.Proxies.IInterfaceServiceArgumentProxy created
+Instance of Mockingbird.Tests.Services.InterfaceService as Mockingbird.Tests.Services.InterfaceService created
 ", messages);
         }
     }

@@ -20,7 +20,7 @@ namespace Mockingbird
             string setupFile = $"{baseFilename}.{methodName}.setup.json";
             string snapshotFile = $"{baseFilename}.{methodName}.snapshot.json";
             ObjectFactoryContext classFactoryContext = new(
-                new ChainedFactory(
+                new RootFactory(
                     options.GetDefinedImplementationFactory(),
                     options.GetAddedFactories(),
                     new HttpClientFactory(),

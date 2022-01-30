@@ -51,10 +51,11 @@ namespace Mockingbird
 
         private T CreateInstance()
         {
-            if (classFactoryContext.RootFactory.TryCreateInstance(typeof(T), classFactoryContext, out object? inst))
+            if (classFactoryContext.RootFactory.CanCreateInstance(typeof(T), classFactoryContext))
             {
-                return (T)inst!;
+                return (T)classFactoryContext.RootFactory.CreateInstance(typeof(T), classFactoryContext);
             }
+
 
             throw new NotImplementedException($"Could not create instance for type {typeof(T).FullName}");
         }

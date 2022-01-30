@@ -1,32 +1,24 @@
-﻿using Mockingbird.Output;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace Mockingbird.Factory
 {
     public class ClassFactory : IObjectFactory
     {
-        public bool TryCreateInstance(Type type, IObjectFactoryContext context, out object? instance)
+        public bool CanCreateInstance(Type type, IObjectFactoryContext context)
+            => type.IsClass && !type.IsAbstract;
+
+        public object CreateInstance(Type type, IObjectFactoryContext context)
         {
             ConstructorInfo[] constructors = type.GetConstructors();
             foreach (ConstructorInfo constructor in constructors)
             {
                 try
                 {
-                    //parameters
                     ParameterInfo[] parameterInfos = constructor.GetParameters();
-                    (bool success, object? inst)[] parameters = parameterInfos
-                        .Select(parameterInfo =>
-                        {
-                            bool success = context.RootFactory.TryCreateInstance(parameterInfo.ParameterType, context, out object? inst);
-                            return (success, inst);
-                        })
+                    object?[] parameters = parameterInfos
+                        .Select(parameterInfo => context.RootFactory.CreateInstance(parameterInfo.ParameterType, context))
                         .ToArray();
-                    if (parameters.All(p => p.success))
-                    {
-                        instance = constructor.Invoke(parameters.Select(p => p.inst).ToArray());
-                        context.LogOutput.InstanceCreated(type, nameof(ClassFactory));
-                        return true;
-                    }
+                    return constructor.Invoke(parameters);
                 }
                 catch (Exception ex)
                 {
@@ -35,9 +27,7 @@ namespace Mockingbird.Factory
                 }
             }
 
-            context.LogOutput.Invoke($"Could not create instance {type.FullName} by {nameof(ClassFactory)}");
-            instance = null;
-            return false;
+            return new NotSupportedException($"Could not create instance of {type.FullName}");
         }
     }
 }

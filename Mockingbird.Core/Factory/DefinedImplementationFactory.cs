@@ -11,17 +11,13 @@ namespace Mockingbird.Factory
             this.implementationFactories = implementationFactories;
         }
 
-        public bool TryCreateInstance(Type type, IObjectFactoryContext context, out object? instance)
-        {
-            if (implementationFactories.TryGetValue(type, out Func<IObjectFactoryContext, object>? factory))
-            {
-                instance = factory!.Invoke(context);
-                context.LogOutput.InstanceCreated(type, nameof(DefinedImplementationFactory));
-                return true;
-            }
+        public bool CanCreateInstance(Type type, IObjectFactoryContext context)
+            => implementationFactories.ContainsKey(type);
 
-            instance = null;
-            return false;
+        public object CreateInstance(Type type, IObjectFactoryContext context)
+        {
+            Func<IObjectFactoryContext, object> factory = implementationFactories[type];
+            return factory.Invoke(context);
         }
     }
 }

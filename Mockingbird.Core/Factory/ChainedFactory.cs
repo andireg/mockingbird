@@ -9,18 +9,20 @@
             this.classFactories = classFactories;
         }
 
-        public bool TryCreateInstance(Type type, IObjectFactoryContext context, out object? instance)
+        public virtual bool CanCreateInstance(Type type, IObjectFactoryContext context)
+            => classFactories.Any(factory => factory.CanCreateInstance(type, context));
+
+        public virtual object CreateInstance(Type type, IObjectFactoryContext context)
         {
             foreach (IObjectFactory classFactory in classFactories)
             {
-                if (classFactory.TryCreateInstance(type, context, out instance))
+                if (classFactory.CanCreateInstance(type, context))
                 {
-                    return true;
+                    return classFactory.CreateInstance(type, context);
                 }
             }
 
-            instance = null;
-            return false;
+            return new NotSupportedException($"Could not create instance of {type.FullName}");
         }
     }
 }
