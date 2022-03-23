@@ -7,7 +7,6 @@ namespace Mockingbird.Utils
     {
         private static readonly JsonSerializerSettings settings = new()
         {
-            PreserveReferencesHandling = PreserveReferencesHandling.Objects,
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
         };
 
