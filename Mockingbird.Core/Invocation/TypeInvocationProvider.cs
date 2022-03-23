@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using Mockingbird.Utils;
 
 namespace Mockingbird.Invocation
 {
@@ -28,6 +28,6 @@ namespace Mockingbird.Invocation
         internal TypeInvocationInfo GetInvocations() => typeInvocationInfo;
 
         private static string GetKey(string invocationName, object? arguments)
-            => $"{invocationName}:{(arguments == null ? string.Empty : JsonConvert.SerializeObject(arguments))}";
+            => $"{invocationName}:{(arguments == null ? string.Empty : JsonUtils.SerializeObject(arguments))}";
     }
 }
