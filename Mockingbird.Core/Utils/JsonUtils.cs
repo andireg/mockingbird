@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Mockingbird.Invocation;
+using Newtonsoft.Json;
 
 namespace Mockingbird.Utils
 {
@@ -12,8 +13,10 @@ namespace Mockingbird.Utils
 
         public static string SerializeObject(object? instance) => JsonConvert.SerializeObject(instance, settings);
 
-        public static T? SerializeObject<T>(string text) => JsonConvert.DeserializeObject<T>(text, settings);
+        internal static string SerializeObject(object? instance, Formatting formatting) => JsonConvert.SerializeObject(instance, formatting, settings);
 
-        public static object? SerializeObject(string text) => JsonConvert.DeserializeObject(text, settings);
+        public static T? DeserializeObject<T>(string text) => JsonConvert.DeserializeObject<T>(text, settings);
+
+        public static object? DeserializeObject(string text) => JsonConvert.DeserializeObject(text, settings);
     }
 }
