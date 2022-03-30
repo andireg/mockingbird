@@ -1,0 +1,20 @@
+[
+  {
+    "TypeName": "Mockingbird.Tests.Services.IOutService",
+    "Invocations": []
+  },
+  {
+    "TypeName": "Mockingbird.Tests.Services.IRefService",
+    "Invocations": [
+      {
+        "InvocationName": "RefMethod",
+        "Arguments": {
+          "number": 100.0,
+          "text": "TEXT"
+        },
+        "Result": true,
+        "Number": 1
+      }
+    ]
+  }
+]

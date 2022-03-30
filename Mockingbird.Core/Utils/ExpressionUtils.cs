@@ -34,6 +34,15 @@ namespace Mockingbird.Factory.Moq
                 setupArguments[parameterInfo.Name!] :
                 null;
             bool isAny = setupValue?.ToString() == "*";
+            bool isRef = parameterInfo.ParameterType.IsByRef;
+            if (isRef)
+            {
+                object? referenceValue = setupValue == null ? 
+                    null : 
+                    ConvertUtils.ConvertToType(setupValue!, parameterInfo.ParameterType);
+                return Expression.Constant(referenceValue, Type.GetType(parameterInfo.ParameterType.FullName![0..^1]));
+            }
+
             if (isAny)
             {
                 return ExpressionUtils.CreateIsAnyExpression(parameterInfo.ParameterType);
