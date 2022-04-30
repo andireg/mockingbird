@@ -37,20 +37,26 @@ namespace Mockingbird.Factory.Moq
             bool isRef = parameterInfo.ParameterType.IsByRef;
             if (isRef)
             {
-                object? referenceValue = setupValue == null ? 
-                    null : 
-                    ConvertUtils.ConvertToType(setupValue!, parameterInfo.ParameterType);
-                return Expression.Constant(referenceValue, Type.GetType(parameterInfo.ParameterType.FullName![0..^1]));
+                return CreateVariable(parameterInfo.ParameterType, setupValue);
             }
 
             if (isAny)
             {
-                return ExpressionUtils.CreateIsAnyExpression(parameterInfo.ParameterType);
+                return CreateIsAnyExpression(parameterInfo.ParameterType);
             }
             else
             {
-                return ExpressionUtils.CreateIsExpression(parameterInfo.ParameterType, setupValue);
+                return CreateIsExpression(parameterInfo.ParameterType, setupValue);
             }
+        }
+
+        private static Expression CreateVariable(Type parameterType, object? setupValue)
+        {
+            object? referenceValue = setupValue == null ?
+                null :
+                ConvertUtils.ConvertToType(setupValue!, parameterType);
+            Type valueType = Type.GetType(parameterType.FullName![0..^1])!;
+            return Expression.Constant(referenceValue, valueType);
         }
 
         internal static Expression CreateIsAnyExpression(Type parameterType)

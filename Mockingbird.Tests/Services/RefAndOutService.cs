@@ -11,8 +11,10 @@
             this.outService = outService;
         }
 
-        public bool RefMethod(decimal number, ref string text) => refService.RefMethod(number, ref text);
+        public bool RefMethod(decimal number, ref string text) 
+            => refService.RefMethod(number, ref text);
 
-        public bool OutMethod(decimal number, out string text) => outService.OutMethod(number, out text);
+        public bool OutMethod(decimal number, out string text) 
+            => outService.OutMethod(number, out text);
     }
 }
