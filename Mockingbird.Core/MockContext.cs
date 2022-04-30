@@ -60,5 +60,15 @@ namespace Mockingbird
 
             throw new NotImplementedException($"Could not create instance for type {typeof(T).FullName}");
         }
+
+        public object? GetInstanceOf(Type type)
+        {
+            if (classFactoryContext.RootFactory.CanCreateInstance(type, classFactoryContext))
+            {
+                return classFactoryContext.RootFactory.CreateInstance(type, classFactoryContext);
+            }
+
+            return null;
+        }
     }
 }
