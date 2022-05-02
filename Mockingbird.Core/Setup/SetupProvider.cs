@@ -5,15 +5,15 @@ namespace Mockingbird.Setup
 {
     internal class SetupProvider : ISetupProvider
     {
-        private readonly string setupFile;
+        private readonly SetupProviderOptions options;
         private readonly IEnumerable<TypeInvocationInfo> typeInvocationInfos;
 
-        public SetupProvider(string setupFile)
+        public SetupProvider(SetupProviderOptions options)
         {
-            this.setupFile = setupFile;
-            if (File.Exists(setupFile))
+            this.options = options;
+            if (File.Exists(options.SetupFile))
             {
-                string json = File.ReadAllText(setupFile);
+                string json = File.ReadAllText(options.SetupFile);
                 typeInvocationInfos = JsonConvert.DeserializeObject<TypeInvocationInfo[]>(json) ?? Array.Empty<TypeInvocationInfo>();
             }
 
@@ -46,6 +46,15 @@ namespace Mockingbird.Setup
 
                         if (usedNumber != setupInvocation.Number)
                         {
+                            options.LogOutput?.Invoke($"Expexted invocation: {setupInvocation.InvocationName} {JsonConvert.SerializeObject(setupInvocation.Arguments ?? string.Empty)}");
+                            if (usedTypeInvocation?.Invocations != null)
+                            {
+                                foreach (InvocationInfo? invocationInfo in usedTypeInvocation.Invocations)
+                                {
+                                    options.LogOutput?.Invoke($"Called invocations: {invocationInfo?.InvocationName} {JsonConvert.SerializeObject(invocationInfo?.Arguments ?? string.Empty)}");
+                                }
+                            }
+
                             throw new Xunit.Sdk.AssertActualExpectedException(
                                 setupInvocation.Number,
                                 usedNumber,
@@ -55,10 +64,10 @@ namespace Mockingbird.Setup
                 }
             }
 
-            if (!File.Exists(setupFile))
+            if (!File.Exists(options.SetupFile))
             {
                 string json = JsonConvert.SerializeObject(usedTypeInvocations, Formatting.Indented);
-                File.WriteAllText(setupFile, json);
+                File.WriteAllText(options.SetupFile, json);
             }
         }
     }

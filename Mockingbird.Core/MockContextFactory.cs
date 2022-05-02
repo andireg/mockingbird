@@ -27,7 +27,7 @@ namespace Mockingbird
                     new DatabaseFactory(),
                     new MoqFactory(),
                     new ClassFactory()),
-                new SetupProvider(setupFile),
+                new SetupProvider(new SetupProviderOptions(setupFile, options.LogOutput)),
                 options.LogOutput);
             return new MockContext<T>(classFactoryContext, snapshotFile, setupFile);
         }
