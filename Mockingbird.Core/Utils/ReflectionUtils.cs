@@ -7,19 +7,38 @@ namespace Mockingbird.Factory.Moq
     {
         internal static MethodInfo GetMethodInfo(this Type type, string methodName, IEnumerable<string> parameterNames)
         {
-            MethodInfo? methodInfo = Array.Find(
-                type.GetMethods(),
-                mi => mi.Name == methodName &&
-                    string.Equals(
-                        string.Join(",", mi.GetParameters().Select(parameter => parameter.Name)),
-                        string.Join(",", parameterNames)));
-
+            MethodInfo? methodInfo = GetMethodInfoInternal(type, methodName, parameterNames);
             if (methodInfo == null)
             {
                 throw new Exception($"In class {type.FullName}, no method {methodName}({string.Join(", ", parameterNames)}) found.");
             }
 
             return methodInfo;
+        }
+
+        private static MethodInfo? GetMethodInfoInternal(Type type, string methodName, IEnumerable<string> parameterNames)
+        {
+            MethodInfo? methodInfo = Array.Find(
+                    type.GetMethods(),
+                    mi => mi.Name == methodName &&
+                        string.Equals(
+                            string.Join(",", mi.GetParameters().Select(parameter => parameter.Name)),
+                            string.Join(",", parameterNames)));
+            if (methodInfo != null)
+            {
+                return methodInfo;
+            }
+
+            foreach (Type interfaceType in type.GetInterfaces())
+            {
+                methodInfo = GetMethodInfoInternal(interfaceType, methodName, parameterNames);
+                if (methodInfo != null)
+                {
+                    return methodInfo;
+                }
+            }
+
+            return null;
         }
 
         internal static MethodInfo GetMethodInfo(this Type type, string method)

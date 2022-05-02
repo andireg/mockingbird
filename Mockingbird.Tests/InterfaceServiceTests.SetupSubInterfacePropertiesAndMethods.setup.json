@@ -1,0 +1,31 @@
+[
+  {
+    "TypeName": "Mockingbird.Tests.Services.ISubInterface",
+    "Invocations": [
+      {
+        "InvocationName": "get_Number",
+        "Arguments": {},
+        "Result": 42,
+        "Number": 1
+      },
+      {
+        "InvocationName": "GetNumber",
+        "Arguments": {},
+        "Result": 42,
+        "Number": 1
+      },
+      {
+        "InvocationName": "get_Text",
+        "Arguments": {},
+        "Result": "TEXT",
+        "Number": 1
+      },
+      {
+        "InvocationName": "GetText",
+        "Arguments": {},
+        "Result": "TEXT",
+        "Number": 1
+      }
+    ]
+  }
+]

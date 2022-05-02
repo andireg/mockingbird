@@ -16,7 +16,10 @@ namespace Mockingbird.Factory
                 {
                     ParameterInfo[] parameterInfos = constructor.GetParameters();
                     object?[] parameters = parameterInfos
-                        .Select(parameterInfo => context.RootFactory.CreateInstance(parameterInfo.ParameterType, context))
+                        .Select(parameterInfo =>
+                            context.RootFactory.CanCreateInstance(parameterInfo.ParameterType, context) ?
+                            context.RootFactory.CreateInstance(parameterInfo.ParameterType, context) : 
+                            null)
                         .ToArray();
                     return constructor.Invoke(parameters);
                 }
@@ -27,7 +30,7 @@ namespace Mockingbird.Factory
                 }
             }
 
-            return new NotSupportedException($"Could not create instance of {type.FullName}");
+            throw new NotSupportedException($"Could not create instance of {type.FullName}");
         }
     }
 }

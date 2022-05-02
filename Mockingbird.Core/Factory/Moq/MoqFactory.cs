@@ -17,7 +17,7 @@ namespace Mockingbird.Factory.Moq
         private static readonly IEnumerable<Type> ignoreTypes = new[] { typeof(CancellationToken) };
 
         public bool CanCreateInstance(Type type, IObjectFactoryContext context)
-            => type.IsAbstract || type.IsInterface;
+            => (type.IsAbstract || type.IsInterface) && type.IsPublic;
 
         public object CreateInstance(Type type, IObjectFactoryContext context)
         {

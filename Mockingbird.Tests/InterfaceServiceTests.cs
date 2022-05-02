@@ -61,5 +61,16 @@ namespace Mockingbird.Tests
             Assert.Equal("HELLO-WORLD", actual);
             context.Verify();
         }
+
+        [Fact]
+        public void SetupSubInterfacePropertiesAndMethods()
+        {
+            using IMockContext<SubInterfaceUsedClass> ctx = MockContextFactory.Start<SubInterfaceUsedClass>();
+            Assert.Equal(42, ctx.Instance.Number);
+            Assert.Equal(42, ctx.Instance.GetNumber());
+            Assert.Equal("TEXT", ctx.Instance.Text);
+            Assert.Equal("TEXT", ctx.Instance.GetText());
+            ctx.Verify();
+        }
     }
 }

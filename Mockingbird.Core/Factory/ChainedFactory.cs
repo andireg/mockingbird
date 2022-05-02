@@ -22,7 +22,7 @@
                 }
             }
 
-            return new NotSupportedException($"Could not create instance of {type.FullName}");
+            throw new NotSupportedException($"Could not create instance of {type.FullName}");
         }
     }
 }

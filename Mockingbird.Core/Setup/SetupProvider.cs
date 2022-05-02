@@ -49,7 +49,7 @@ namespace Mockingbird.Setup
                             options.LogOutput?.Invoke($"Expexted invocation: {setupInvocation.InvocationName} {JsonConvert.SerializeObject(setupInvocation.Arguments ?? string.Empty)}");
                             if (usedTypeInvocation?.Invocations != null)
                             {
-                                foreach (InvocationInfo? invocationInfo in usedTypeInvocation.Invocations)
+                                foreach (InvocationInfo? invocationInfo in usedTypeInvocation.Invocations.Where(inv => inv.InvocationName == setupInvocation.InvocationName))
                                 {
                                     options.LogOutput?.Invoke($"Called invocations: {invocationInfo?.InvocationName} {JsonConvert.SerializeObject(invocationInfo?.Arguments ?? string.Empty)}");
                                 }
