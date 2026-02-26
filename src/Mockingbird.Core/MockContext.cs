@@ -1,7 +1,6 @@
 ﻿using Mockingbird.Factory;
 using Mockingbird.Invocation;
 using Mockingbird.Utils;
-using Newtonsoft.Json;
 
 namespace Mockingbird
 {
@@ -25,7 +24,7 @@ namespace Mockingbird
         public void Dispose()
         {
             IEnumerable<TypeInvocationInfo> invocations = GetTypeInvocations();
-            string json = JsonUtils.SerializeObject(invocations, Formatting.Indented);
+            string json = JsonUtils.SerializeObjectIndent(invocations);
             File.WriteAllText(snapshotFile, json);
 
             if (!File.Exists(setupFile))

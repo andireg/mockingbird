@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path=".github/workflows/build.yml" />
+    <File Path=".github/workflows/release.yml" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="src/Mockingbird.Abstractions/Mockingbird.Abstractions.csproj" />
+  <Project Path="src/Mockingbird.Core/Mockingbird.Core.csproj" />
+  <Project Path="test/Mockingbird.Tests/Mockingbird.Tests.csproj" />
+</Solution>
