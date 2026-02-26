@@ -3,6 +3,8 @@
   <PropertyGroup>
     <RootNamespace>Mockingbird</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IsTestProject>false</IsTestProject>
+    <IsPackable>true</IsPackable>
     <PackageId>Testing.Mockingbird</PackageId>
     <PackageTags>testing mocking net 10</PackageTags>
     <Description>

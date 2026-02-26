@@ -7,10 +7,7 @@
     <Authors>Andreas Regner</Authors>
     <RepositoryUrl>https://github.com/andireg/mockingbird</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Product>Mockingbird</Product>
-    <IsTestProject>false</IsTestProject>
-    <IsPackable>true</IsPackable>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
