@@ -1,7 +1,6 @@
-﻿namespace Mockingbird.Invocation
+﻿namespace Mockingbird.Invocation;
+
+public record TypeInvocationInfo(string TypeName)
 {
-    public record TypeInvocationInfo(string TypeName)
-    {
-        public IList<InvocationInfo> Invocations { get; } = new List<InvocationInfo>();
-    }
+    public List<InvocationInfo> Invocations { get; set; } = new();
 }

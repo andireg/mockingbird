@@ -10,8 +10,8 @@
         },
         "Result": {
           "Status": 200,
-          "Content": "true",
-          "ContentType": "application/json"
+          "Content": "",
+          "ContentType": null
         },
         "Number": 1
       }

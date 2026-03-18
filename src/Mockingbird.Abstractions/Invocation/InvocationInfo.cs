@@ -1,7 +1,6 @@
-﻿namespace Mockingbird.Invocation
+﻿namespace Mockingbird.Invocation;
+
+public record InvocationInfo(string InvocationName, object? Arguments, object? Result)
 {
-    public record InvocationInfo(string InvocationName, object? Arguments, object? Result)
-    {
-        public int Number { get; set; } = 1;
-    }
+    public int Number { get; set; } = 1;
 }

@@ -1,10 +1,9 @@
-﻿namespace Mockingbird.Tests.Services
+﻿namespace Mockingbird.Tests.Services;
+
+public interface ISubInterface : IMainInterface
 {
-    public interface ISubInterface : IMainInterface
-    {
 
-        decimal Number { get; set; }
+    decimal Number { get; set; }
 
-        decimal GetNumber();
-    }
+    decimal GetNumber();
 }

@@ -22,7 +22,7 @@ namespace System.Net.Http.Json
 
         protected override Task SerializeToStreamAsync(Stream stream, TransportContext context)
         {
-            string? json = JsonConvert.SerializeObject(
+            string? json = JsonSerializer.SerializeObject(
                 _value,
                 Formatting.None,
                 new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });

@@ -1,16 +1,15 @@
 ﻿using Mockingbird.Invocation;
 using Mockingbird.Setup;
 
-namespace Mockingbird.Factory
+namespace Mockingbird.Factory;
+
+public interface IObjectFactoryContext
 {
-    public interface IObjectFactoryContext
-    {
-        IObjectFactory RootFactory { get; }
+    IObjectFactory RootFactory { get; }
 
-        ISetupProvider SetupProvider { get; }
+    ISetupProvider SetupProvider { get; }
 
-        IInvocationProvider InvocationProvider { get; }
+    IInvocationProvider InvocationProvider { get; }
 
-        Action<string> LogOutput { get; }
-    }
+    Action<string> LogOutput { get; }
 }

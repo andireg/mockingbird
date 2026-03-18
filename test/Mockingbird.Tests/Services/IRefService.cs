@@ -1,7 +1,6 @@
-﻿namespace Mockingbird.Tests.Services
+﻿namespace Mockingbird.Tests.Services;
+
+public interface IRefService
 {
-    public interface IRefService
-    {
-        bool RefMethod(decimal number, ref string text);
-    }
+    bool RefMethod(decimal number, ref string text);
 }

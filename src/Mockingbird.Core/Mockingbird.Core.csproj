@@ -14,9 +14,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+    <_Parameter1>Mockingbird.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);XUNIT_NULLABLE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.CodeDom" />
-    <PackageReference Include="xunit.v3"  />
-    <PackageReference Include="Moq"  />
+    <PackageReference Include="xunit.v3.assert" />
+    <PackageReference Include="xunit.v3.extensibility.core" />
+    <PackageReference Include="Moq" />
   </ItemGroup>
 
   <ItemGroup>

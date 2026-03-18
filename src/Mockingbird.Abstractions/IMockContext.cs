@@ -1,14 +1,13 @@
-﻿namespace Mockingbird
+﻿namespace Mockingbird;
+
+public interface IMockContext : IDisposable
 {
-    public interface IMockContext : IDisposable
-    {
-        object? GetInstanceOf(Type type);
+    object? GetInstanceOf(Type type);
 
-        void Verify();
-    }
+    void Verify();
+}
 
-    public interface IMockContext<T> : IMockContext
-    {
-        T Instance { get; }
-    }
+public interface IMockContext<T> : IMockContext
+{
+    T Instance { get; }
 }

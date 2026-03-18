@@ -1,7 +1,6 @@
-﻿namespace Mockingbird.Tests.Services
+﻿namespace Mockingbird.Tests.Services;
+
+public interface IOutService
 {
-    public interface IOutService
-    {
-        bool OutMethod(decimal number, out string text);
-    }
+    bool OutMethod(decimal number, out string text);
 }

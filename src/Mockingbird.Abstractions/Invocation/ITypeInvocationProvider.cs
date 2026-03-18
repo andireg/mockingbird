@@ -1,7 +1,6 @@
-﻿namespace Mockingbird.Invocation
+﻿namespace Mockingbird.Invocation;
+
+public interface ITypeInvocationProvider
 {
-    public interface ITypeInvocationProvider
-    {
-        void AddInvocation(string functionName, object? arguments, object? result);
-    }
+    void AddInvocation(string functionName, object? arguments, object? result);
 }

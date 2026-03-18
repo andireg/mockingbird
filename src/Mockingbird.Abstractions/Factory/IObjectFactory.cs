@@ -1,9 +1,8 @@
-﻿namespace Mockingbird.Factory
-{
-    public interface IObjectFactory
-    {
-        object CreateInstance(Type type, IObjectFactoryContext context);
+﻿namespace Mockingbird.Factory;
 
-        bool CanCreateInstance(Type type, IObjectFactoryContext context);
-    }
+public interface IObjectFactory
+{
+    object CreateInstance(Type type, IObjectFactoryContext context);
+
+    bool CanCreateInstance(Type type, IObjectFactoryContext context);
 }

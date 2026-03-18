@@ -1,11 +1,10 @@
-﻿namespace Mockingbird.Invocation
+﻿namespace Mockingbird.Invocation;
+
+public interface IInvocationProvider
 {
-    public interface IInvocationProvider
-    {
-        ITypeInvocationProvider ForType(Type type);
+    ITypeInvocationProvider ForType(Type type);
 
-        IEnumerable<TypeInvocationInfo> GetInvocations();
+    IEnumerable<TypeInvocationInfo> GetInvocations();
 
-        void BeforeCollectInvocations(Action callback);
-    }
+    void BeforeCollectInvocations(Action callback);
 }

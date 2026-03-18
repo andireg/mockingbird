@@ -1,95 +1,99 @@
 ﻿using Moq;
-using Newtonsoft.Json;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text.Json;
 
-namespace Mockingbird.Factory.Moq
+namespace Mockingbird.Factory.Moq;
+
+internal static class ExpressionUtils
 {
-    internal static class ExpressionUtils
+    private static readonly Type ItType = typeof(It);
+    private static readonly Type JsonSerializerType = typeof(JsonSerializer);
+    private static readonly MethodInfo ItIsAnyMethodInfo = ItType.GetMethodInfo("IsAny<TValue>()");
+    private static readonly MethodInfo ItIsMethodInfo = ItType.GetMethodInfo("Is<TValue>(Expression<Func<TValue, Boolean>>)");
+    private static readonly MethodInfo JsonSerializerSerializeObjectMethodInfo = JsonSerializerType.GetMethodInfo("Serialize(Object,Type,JsonSerializerOptions)");
+    private static readonly JsonSerializerOptions jsonSerializerOptions = new(JsonSerializerDefaults.Web);
+
+    internal static Expression CreateSetupExpression(
+        Type serviceType,
+        MethodInfo instanceMethodInfo,
+        IDictionary<string, object?> functionArguments)
     {
-        private static readonly Type ItType = typeof(It);
-        private static readonly Type JsonConvertType = typeof(JsonConvert);
-        private static readonly MethodInfo ItIsAnyMethodInfo = ItType.GetMethodInfo("IsAny<TValue>()");
-        private static readonly MethodInfo ItIsMethodInfo = ItType.GetMethodInfo("Is<TValue>(Expression<Func<TValue, Boolean>>)");
-        private static readonly MethodInfo JsonConvertSerializeObjectMethodInfo = JsonConvertType.GetMethodInfo("SerializeObject(Object)");
+        ParameterExpression parameterExpression = Expression.Parameter(serviceType, "x");
+        Expression[] parameterExpressions = instanceMethodInfo.GetParameters()
+            .Select(parameter => CreateParameterExpression(parameter, functionArguments))
+            .ToArray();
+        Expression invocationExpression = Expression.Call(parameterExpression, instanceMethodInfo, parameterExpressions);
+        return Expression.Lambda(invocationExpression, parameterExpression);
+    }
 
-        internal static Expression CreateSetupExpression(
-            Type serviceType,
-            MethodInfo instanceMethodInfo,
-            IDictionary<string, object> functionArguments)
+    internal static Expression CreateParameterExpression(
+        ParameterInfo parameterInfo,
+        IDictionary<string, object?> setupArguments)
+    {
+        object? setupValue = setupArguments.ContainsKey(parameterInfo.Name!) ?
+            setupArguments[parameterInfo.Name!] :
+            null;
+        bool isAny = setupValue?.ToString() == "*";
+        bool isRef = parameterInfo.ParameterType.IsByRef;
+        if (isRef)
         {
-            ParameterExpression parameterExpression = Expression.Parameter(serviceType, "x");
-            Expression[] parameterExpressions = instanceMethodInfo.GetParameters()
-                .Select(parameter => CreateParameterExpression(parameter, functionArguments))
-                .ToArray();
-            Expression invocationExpression = Expression.Call(parameterExpression, instanceMethodInfo, parameterExpressions);
-            return Expression.Lambda(invocationExpression, parameterExpression);
+            object? referenceValue = setupValue == null ? 
+                null : 
+                ConvertUtils.ConvertToType(setupValue!, parameterInfo.ParameterType);
+            return Expression.Constant(referenceValue, Type.GetType(parameterInfo.ParameterType.FullName![0..^1]));
         }
 
-        internal static Expression CreateParameterExpression(
-            ParameterInfo parameterInfo,
-            IDictionary<string, object> setupArguments)
+        if (isAny)
         {
-            object? setupValue = setupArguments.ContainsKey(parameterInfo.Name!) ?
-                setupArguments[parameterInfo.Name!] :
-                null;
-            bool isAny = setupValue?.ToString() == "*";
-            bool isRef = parameterInfo.ParameterType.IsByRef;
-            if (isRef)
+            return ExpressionUtils.CreateIsAnyExpression(parameterInfo.ParameterType);
+        }
+        else
+        {
+            return ExpressionUtils.CreateIsExpression(parameterInfo.ParameterType, setupValue);
+        }
+    }
+
+    internal static Expression CreateIsAnyExpression(Type parameterType)
+    {
+        MethodInfo typedIsAnyMethodInfo = ItIsAnyMethodInfo.MakeGenericMethod(parameterType);
+        return Expression.Call(null, typedIsAnyMethodInfo);
+    }
+
+    internal static Expression CreateIsExpression(
+        Type parameterType,
+        object? referenceValue)
+    {
+        ParameterExpression parameter = Expression.Parameter(parameterType, "x");
+        Expression referenceValueExpression;
+        Expression currentValueExpression;
+        if (!parameterType.IsPrimitive && parameterType != typeof(string))
+        {
+            referenceValueExpression = Expression.Constant(referenceValue == null ? null : JsonSerializer.Serialize(referenceValue!));
+            currentValueExpression = Expression.Call(
+                JsonSerializerSerializeObjectMethodInfo, 
+                Expression.Convert(parameter, typeof(object)),
+                Expression.Constant(parameterType),
+                Expression.Constant(jsonSerializerOptions));
+        }
+        else
+        {
+            try
             {
-                object? referenceValue = setupValue == null ? 
-                    null : 
-                    ConvertUtils.ConvertToType(setupValue!, parameterInfo.ParameterType);
-                return Expression.Constant(referenceValue, Type.GetType(parameterInfo.ParameterType.FullName![0..^1]));
+                referenceValue = referenceValue == null ? null : ConvertUtils.ConvertToType(referenceValue!, parameterType);
+            }
+            catch
+            {
+                // ignore casting issue
             }
 
-            if (isAny)
-            {
-                return ExpressionUtils.CreateIsAnyExpression(parameterInfo.ParameterType);
-            }
-            else
-            {
-                return ExpressionUtils.CreateIsExpression(parameterInfo.ParameterType, setupValue);
-            }
+            referenceValueExpression = Expression.Constant(referenceValue);
+            currentValueExpression = parameter;
         }
 
-        internal static Expression CreateIsAnyExpression(Type parameterType)
-        {
-            MethodInfo typedIsAnyMethodInfo = ItIsAnyMethodInfo.MakeGenericMethod(parameterType);
-            return Expression.Call(null, typedIsAnyMethodInfo);
-        }
-
-        internal static Expression CreateIsExpression(
-            Type parameterType,
-            object? referenceValue)
-        {
-            ParameterExpression parameter = Expression.Parameter(parameterType, "x");
-            Expression referenceValueExpression;
-            Expression currentValueExpression;
-            if (!parameterType.IsPrimitive && parameterType != typeof(string))
-            {
-                referenceValueExpression = Expression.Constant(referenceValue == null ? null : JsonConvert.SerializeObject(referenceValue!));
-                currentValueExpression = Expression.Call(JsonConvertSerializeObjectMethodInfo, Expression.Convert(parameter, typeof(object)));
-            }
-            else
-            {
-                try
-                {
-                    referenceValue = referenceValue == null ? null : ConvertUtils.ConvertToType(referenceValue!, parameterType);
-                }
-                catch
-                {
-                    // ignore casting issue
-                }
-
-                referenceValueExpression = Expression.Constant(referenceValue);
-                currentValueExpression = parameter;
-            }
-
-            BinaryExpression equalExpression = Expression.Equal(currentValueExpression, referenceValueExpression);
-            Expression lamdaExpression = Expression.Lambda(equalExpression, parameter);
-            MethodInfo isMethodInfo = ItIsMethodInfo.MakeGenericMethod(parameterType);
-            return Expression.Call(null, isMethodInfo, lamdaExpression);
-        }
+        BinaryExpression equalExpression = Expression.Equal(currentValueExpression, referenceValueExpression);
+        Expression lamdaExpression = Expression.Lambda(equalExpression, parameter);
+        MethodInfo isMethodInfo = ItIsMethodInfo.MakeGenericMethod(parameterType);
+        return Expression.Call(null, isMethodInfo, lamdaExpression);
     }
 }
