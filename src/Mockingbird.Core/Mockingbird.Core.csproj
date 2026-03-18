@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Mockingbird</RootNamespace>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <IsTestProject>false</IsTestProject>
+    <IsPackable>true</IsPackable>
+    <PackageId>Testing.Mockingbird</PackageId>
+    <PackageTags>testing mocking net 10</PackageTags>
+    <Description>
+      This library should help you to test easily methods without writing all the mocks yourself.
+      See - https://github.com/andireg/mockingbird
+    </Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+    <_Parameter1>Mockingbird.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);XUNIT_NULLABLE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.CodeDom" />
+    <PackageReference Include="xunit.v3.assert" />
+    <PackageReference Include="xunit.v3.extensibility.core" />
+    <PackageReference Include="Moq" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mockingbird.Abstractions\Mockingbird.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
